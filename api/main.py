@@ -3,9 +3,12 @@ from pydantic import BaseModel, Field
 from src.inference import load_model, create_inference_features
 import time
 import logging
-from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
+#from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 from fastapi import Response
-
+import time
+import logging
+from fastapi import Response
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
 app = FastAPI(title='Manufacturing Defect Prediction API', description='AWS-ready XGBoost API for predicting high-risk manufacturing batches.', version='1.0.0')
 model = load_model()
@@ -45,7 +48,7 @@ def predict_defect_risk(request: DefectPredictionRequest):
         HIGH_RISK_PREDICTIONS.inc()
     else:
         LOW_RISK_PREDICTIONS.inc()
-        
+
 @app.get("/metrics")
 def metrics():
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
