@@ -1,0 +1,7 @@
+version: '3.9'
+services:
+  defect-api:
+    build: .
+    container_name: xgboost-defect-api
+    ports:
+      - '8000:8000'
